@@ -32,3 +32,11 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal
+    - name: Create issue if failed
+      if: failure()
+      uses: JasonEtco/create-an-issue@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        INFO: 'Max Mustermann'
+      with:
+        filename: .github/workflows/BUILDFAILED_TEMPLATE.md
