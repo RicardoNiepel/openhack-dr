@@ -39,4 +39,4 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         INFO: 'Max Mustermann'
       with:
-        filename: .github/workflows/BUILDFAILED_TEMPLATE.md
+        filename: '.github/workflows/BUILDFAILED_TEMPLATE.md'
