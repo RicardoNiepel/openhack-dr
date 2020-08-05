@@ -40,3 +40,8 @@ jobs:
         INFO: 'Max Mustermann'
       with:
         filename: '.github/workflows/BUILDFAILED_TEMPLATE.md'
+    - uses: azure/login@v1.1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - run: |
+        az acr build --image "devopsoh/api-poi:${BASEIMAGETAG}" --registry openhackaya6gdn9acr --file web/Dockerfile web
