@@ -44,4 +44,4 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - run: |
-        az acr build --image "devopsoh/api-poi:${BASEIMAGETAG}" --registry openhackaya6gdn9acr --file web/Dockerfile web
+        az acr build --image "devopsoh/api-poi:$GITHUB_RUN_ID" --registry openhackaya6gdn9acr --file web/Dockerfile web
