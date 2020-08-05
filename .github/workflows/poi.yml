@@ -40,8 +40,22 @@ jobs:
 #        INFO: 'Max Mustermann'
 #      with:
 #        filename: '.github/workflows/BUILDFAILED_TEMPLATE.md'
-    - uses: azure/login@v1.1
+    - name: login to Azure CLI
+      if: github.ref == 'refs/heads/master'
+      uses: azure/login@v1.1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - run: |
-        az acr build --image "devopsoh/api-poi:$GITHUB_RUN_ID" --registry openhackaya6gdn9acr --file web/Dockerfile web
+    - name: build and publish container
+      if: github.ref == 'refs/heads/master'
+      run: |
+        az acr build --image "devopsoh/api-poi:${{ env.GITHUB_RUN_ID }}" --registry openhackaya6gdn9acr --file web/Dockerfile web
+    - name: deploy new image to Azure Web App
+      if: github.ref == 'refs/heads/master'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'openhackaya6gdn9poi'
+        images: 'openhackaya6gdn9acr.azurecr.io/devopsoh/api-poi:${{ env.GITHUB_RUN_ID }}'        
+        
+        
+        
+        
